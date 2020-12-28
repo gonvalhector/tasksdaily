@@ -1,0 +1,33 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Delete Task
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">Delete <strong>{{ task.name }}</strong></h1>
+            <div class="text-center my-5">
+                <p>Are you sure you want to delete <strong>{{ task.name }}</strong>?</p>
+                {% if logs_n > 0 %}
+                    <p>There were <strong>{{logs_n }}</strong> logs found from <em>{{ range_start }}</em> to <em>{{ range_end }}</em> associated with <strong>{{ task.name }}</strong>.</p>
+                {% else %}
+                    <p>You have no logs associated with <strong>{{ task.name }}</strong>.</p>
+                {% endif %}
+                <p>You can uncheck the Active status of the task in order for it to stop appearing, instead of losing all past logs.</p>
+            </div>
+            <form action="{% url 'delete_task' task_id %}" method="post">
+                {% csrf_token %}
+                <select class="custom-select mb-3" id="task_select" name="task_select">
+                        <option value="{{ task.id }}" selected>{{ task.name }}</option>
+                </select>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Delete task</button>
+                </div>
+            </form>
+            <p><a href="{% url 'tasks_overview' %}" class="return"><img src="{% static 'tasks/images/icons/return.svg' %}" alt="" class="mr-1">Return to tasks.</a></p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'tasks/js/register.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col">
+            <h1>Register</h1>
+            <form action="{% url 'register' %}" method="post" class="my-3">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp" autocomplete="off" {% if user.is_authenticated %}disabled{% endif %}>
+                    <small id="usernameHelp" class="form-text text-muted">
+                        Usernames must be 150 characters max, contain only letters, numbers, underscores or hyphens.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name <b>(Optional)</b></label>
+                    <input type="text" class="form-control" id="first_name" aria-describedby="firstNameHelp" name="first_name" autocomplete="off" {% if user.is_authenticated %}disabled{% endif %}>
+                    <small id="firstNameHelp" class="form-text text-muted">
+                        First names should be 150 characters or fewer.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name <b>(Optional)</b></label>
+                    <input type="text" class="form-control" id="last_name" aria-describedby="lastNameHelp" name="last_name" autocomplete="off" {% if user.is_authenticated %}disabled{% endif %}>
+                    <small id="lastNameHelp" class="form-text text-muted">
+                        Last names should be 150 characters or fewer.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" autocomplete="off" {% if user.is_authenticated %}disabled{% endif %}>
+                    <small id="emailHelp" class="form-text text-muted">
+                        We will never share your email with anyone else.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" autocomplete="off" {% if user.is_authenticated %}disabled{% endif %}>
+                    <small id="passwordHelp" class="form-text text-muted">
+                        Passwords should be at least 8 characters long, not entirely numeric, sufficiently different from the other information and not a <a href="https://gist.github.com/roycewilliams/281ce539915a947a23db17137d91aeb7">common password</a>.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="password_confirm">Confirm Password</label>
+                    <input type="password" class="form-control" id="password_confirm" name="password_confirm" autocomplete="off" {% if user.is_authenticated %}disabled{% endif %}>
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit" {% if user.is_authenticated %}disabled{% endif %}>Register</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.index, name="index"),
+    path("register", views.register, name="register"),
+    path("login", views.login_view, name="login"),
+    path("logout", views.logout_view, name="logout"),
+    path("tasks", views.redir, name="broken_tasks"),
+    path("tasks/", views.redir, name="broken_tasks"),
+    path("tasks/add", views.add_task, name="add_task"),
+    path("tasks/overview", views.tasks_overview, name="tasks_overview"),
+    path("tasks/delete/task/<int:task_id>", views.delete_task, name="delete_task"),
+    path("tasks/delete/category/<int:category_id>", views.delete_category, name="delete_category"),
+    path("log", views.redir, name="broken_daily"),
+    path("log/", views.redir, name="broken_daily"),
+    path("log/daily/", views.redir, name="broken_daily"),
+    path("log/daily", views.daily_log, name="daily"),
+    path("log/weekly/", views.redir, name="broken_weekly"),
+    path("log/weekly", views.weekly_log, name="weekly"),
+    path("log/weekly/edit/<int:weekday_n>", views.edit_log, name="edit"),
+    path("log/weekly/edit", views.redir, name="broken_weekly"),
+    path("log/weekly/edit/", views.redir, name="broken_weekly"),
+    path("log/monthly", views.redir, name="broken_past"),
+    path("log/monthly/", views.redir, name="broken_past"),
+    path("log/monthly/<int:year_n>/<int:month_n>", views.monthly, name="monthly"),
+    path("log/past/", views.redir, name="broken_past"),
+    path("log/past", views.past_log, name="past"),
+    path("progress", views.progress, name="progress"),
+    path("about", views.about, name="about"),
+    path("settings", views.redir, name="broken_settings"),
+    path("settings/", views.redir, name="broken_settings"),
+    path("settings/profile", views.settings_profile, name="profile"),
+    path("settings/timezone", views.settings_timezone, name="timezone")
+]

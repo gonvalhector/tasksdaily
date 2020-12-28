@@ -1,0 +1,320 @@
+body main .card .card-body, body main .menu .menu-body, body main .credits .list-group-item {
+  background-color: #ccc5b9; }
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #E6E1D6;
+  color: #252422; }
+  body a {
+    color: #868179; }
+  body a:hover {
+    color: #403d39; }
+  body header nav {
+    background-color: #403d39;
+    box-shadow: 0px 1px 2px 0.5px #252422; }
+    body header nav .navbar-brand {
+      font-family: "Sacramento", cursive;
+      font-weight: bold;
+      font-size: 25px;
+      color: #B6A35D; }
+      body header nav .navbar-brand #brand-img {
+        height: auto;
+        filter: invert(65%) sepia(50%) saturate(362%) hue-rotate(10deg) brightness(92%) contrast(84%); }
+    body header nav .navbar-brand:hover {
+      color: #D6BB57; }
+      body header nav .navbar-brand:hover #brand-img {
+        filter: invert(73%) sepia(58%) saturate(400%) hue-rotate(6deg) brightness(94%) contrast(86%); }
+    body header nav .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(182, 163, 93, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); }
+    body header nav .navbar-toggler-icon:active {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(214, 187, 87, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); }
+    body header nav .navbar-nav .nav-item p {
+      color: #ccc5b9; }
+      body header nav .navbar-nav .nav-item p #user-img {
+        filter: invert(89%) sepia(12%) saturate(219%) hue-rotate(359deg) brightness(90%) contrast(87%); }
+    body header nav .navbar-nav .nav-item .nav-link {
+      color: #868179; }
+      body header nav .navbar-nav .nav-item .nav-link .icon {
+        filter: invert(54%) sepia(8%) saturate(359%) hue-rotate(358deg) brightness(92%) contrast(85%); }
+    body header nav .navbar-nav .nav-item .nav-link:hover {
+      color: #ccc5b9; }
+      body header nav .navbar-nav .nav-item .nav-link:hover .icon {
+        filter: invert(89%) sepia(12%) saturate(219%) hue-rotate(359deg) brightness(90%) contrast(87%); }
+    body header nav .navbar-nav .nav-item .active {
+      color: #ccc5b9; }
+      body header nav .navbar-nav .nav-item .active .icon-active {
+        filter: invert(89%) sepia(12%) saturate(219%) hue-rotate(359deg) brightness(90%) contrast(87%); }
+    body header nav .navbar-nav .nav-item .active:hover {
+      color: #ccc5b9; }
+  @media (min-width: 0px) {
+    body main h1 {
+      font-size: 20px; } }
+  @media (min-width: 241px) {
+    body main h1 {
+      font-size: 25px; } }
+  @media (min-width: 360px) {
+    body main h1 {
+      font-size: 35px; } }
+  @media (min-width: 411px) {
+    body main h1 {
+      font-size: default; } }
+  body main .badge-complete {
+    background-color: #B6A35D;
+    color: #E6E1D6; }
+  body main .badge-incomplete {
+    background-color: #ACACAC;
+    color: #E6E1D6; }
+  body main .badge-ignored {
+    background-color: #B87333;
+    color: #E6E1D6; }
+  body main .badge-pending {
+    background-color: #868179;
+    color: #E6E1D6; }
+  body main .jumbotron {
+    background-color: #E6E1D6;
+    color: #252422; }
+  body main input[type=checkbox] {
+    height: 16px;
+    width: 16px; }
+  body main .return {
+    filter: invert(54%) sepia(8%) saturate(359%) hue-rotate(358deg) brightness(92%) contrast(85%); }
+  body main .return:hover {
+    filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+  body main .months {
+    filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+  body main .months:hover {
+    filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+  body main .months-disabled {
+    filter: invert(54%) sepia(8%) saturate(359%) hue-rotate(358deg) brightness(92%) contrast(85%); }
+  body main .table {
+    border-radius: 6px !important;
+    -moz-border-radius: 6px !important; }
+    body main .table thead {
+      background-color: #403d39;
+      color: #ccc5b9; }
+      body main .table thead th {
+        border-bottom: none; }
+    body main .table tbody {
+      background-color: #ccc5b9;
+      color: #252422; }
+      body main .table tbody td .delete {
+        filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+      body main .table tbody td .delete:hover {
+        filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+      body main .table tbody td .status {
+        filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+      body main .table tbody td .status:hover {
+        filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+    body main .table td, body main .table th {
+      border-top: 1px solid #E6E1D6;
+      vertical-align: middle; }
+  body main .card .text-muted {
+    color: #868179 !important; }
+  body main .card .card-header {
+    background-color: #403d39;
+    color: #ccc5b9; }
+    body main .card .card-header .uneditable {
+      filter: invert(54%) sepia(8%) saturate(359%) hue-rotate(358deg) brightness(92%) contrast(85%); }
+    body main .card .card-header .editable {
+      filter: invert(89%) sepia(12%) saturate(219%) hue-rotate(359deg) brightness(90%) contrast(87%); }
+    body main .card .card-header .editable:hover {
+      filter: invert(97%) sepia(6%) saturate(445%) hue-rotate(342deg) brightness(96%) contrast(86%); }
+  body main .card .card-body img {
+    filter: invert(54%) sepia(8%) saturate(359%) hue-rotate(358deg) brightness(92%) contrast(85%); }
+  @media (min-width: 0px) {
+    body main .menu {
+      width: 50px; } }
+  @media (min-width: 241px) {
+    body main .menu {
+      width: 70px; } }
+  @media (min-width: 360px) {
+    body main .menu {
+      width: 104px; } }
+  @media (min-width: 411px) {
+    body main .menu {
+      width: 114px; } }
+  @media (min-width: 600px) {
+    body main .menu {
+      width: 166px; } }
+  @media (min-width: 768px) {
+    body main .menu {
+      width: 213px; } }
+  @media (min-width: 1024px) {
+    body main .menu {
+      width: 220px; } }
+  @media (min-width: 1920px) {
+    body main .menu {
+      width: 240px; } }
+  @media (min-width: 2560px) {
+    body main .menu {
+      width: 355px; } }
+  body main .menu .menu-header {
+    background-color: #403d39;
+    color: #ccc5b9; }
+    @media (min-width: 0px) {
+      body main .menu .menu-header {
+        height: 20px; } }
+    @media (min-width: 241px) {
+      body main .menu .menu-header {
+        height: 30px; } }
+    @media (min-width: 360px) {
+      body main .menu .menu-header {
+        height: 40px; } }
+    @media (min-width: 411px) {
+      body main .menu .menu-header {
+        height: 100%; } }
+  body main .menu .menu-body img {
+    filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+  @media (min-width: 0px) {
+    body main .menu .menu-body {
+      height: 30px; }
+      body main .menu .menu-body img {
+        height: 30px; } }
+  @media (min-width: 241px) {
+    body main .menu .menu-body {
+      height: 45px; }
+      body main .menu .menu-body img {
+        height: 30px; } }
+  @media (min-width: 360px) {
+    body main .menu .menu-body {
+      height: 66px; }
+      body main .menu .menu-body img {
+        height: 30px; } }
+  @media (min-width: 411px) {
+    body main .menu .menu-body {
+      height: 65px; }
+      body main .menu .menu-body img {
+        height: 50px; } }
+  @media (min-width: 600px) {
+    body main .menu .menu-body {
+      height: 117px; }
+      body main .menu .menu-body img {
+        height: 90px; } }
+  @media (min-width: 768px) {
+    body main .menu .menu-body {
+      height: 164px; }
+      body main .menu .menu-body img {
+        height: 120px; } }
+  @media (min-width: 1024px) {
+    body main .menu .menu-body {
+      height: 171px; }
+      body main .menu .menu-body img {
+        height: 150px; } }
+  @media (min-width: 1920px) {
+    body main .menu .menu-body {
+      height: 191px; }
+      body main .menu .menu-body img {
+        height: 150px; } }
+  @media (min-width: 2560px) {
+    body main .menu .menu-body {
+      height: 306px; }
+      body main .menu .menu-body img {
+        height: 200px; } }
+  body main .menu:hover .menu-header {
+    background-color: #252422; }
+  body main .menu:hover .menu-body img {
+    filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%) !important; }
+  @media (min-width: 768px) {
+    body main .credits .list-group-item {
+      width: 50%; } }
+  @media (min-width: 1024px) {
+    body main .credits .list-group-item {
+      width: 35%; } }
+  body main .btn-primary {
+    background-color: #403d39;
+    border-color: #868179;
+    color: #868179; }
+  body main .btn-primary:hover {
+    background-color: #252422;
+    border-color: #403d39;
+    color: #ccc5b9; }
+  body main .btn-primary:active {
+    background-color: #868179 !important;
+    border-color: #ccc5b9 !important;
+    box-shadow: none !important;
+    outline: none !important; }
+  body main .btn-primary:focus {
+    background-color: #403d39;
+    border-color: #868179;
+    box-shadow: none;
+    outline: 2px solid #252422; }
+  body main .btn-primary:disabled {
+    background-color: #868179;
+    border-color: #ccc5b9;
+    color: #ccc5b9; }
+  body main .expandable {
+    filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+  body main .expandable:hover {
+    filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+  body main input:focus {
+    border-color: #868179 !important;
+    outline: 2px solid #252422 !important; }
+  body main .invalid:focus {
+    border-color: #868179 !important;
+    outline: 2px solid red !important; }
+  body main .invalid {
+    outline: 2px solid red !important; }
+  body main .invalid + small {
+    color: red !important; }
+  body main .settings {
+    height: 462px; }
+    @media (min-width: 0px) {
+      body main .settings .list-group {
+        width: 64px; } }
+    @media (min-width: 360px) {
+      body main .settings .list-group {
+        width: auto; } }
+    body main .settings .list-group .list-group-item {
+      background-color: #ccc5b9;
+      border: none;
+      color: #403d39; }
+      body main .settings .list-group .list-group-item img {
+        filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%); }
+    body main .settings .list-group .list-group-item:hover {
+      color: #252422; }
+      body main .settings .list-group .list-group-item:hover img {
+        filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+    body main .settings .list-group .list-group-item.active {
+      background-color: #403d39;
+      color: #ccc5b9; }
+      body main .settings .list-group .list-group-item.active img {
+        filter: invert(89%) sepia(12%) saturate(219%) hue-rotate(359deg) brightness(90%) contrast(87%); }
+    body main .settings .list-group .list-group-item.active:hover {
+      background-color: #252422; }
+  @media (min-width: 0px) {
+    body main .menu-text {
+      visibility: hidden; } }
+  @media (min-width: 360px) {
+    body main .menu-text {
+      font-size: 4vw;
+      visibility: visible; } }
+  @media (min-width: 411px) {
+    body main .menu-text {
+      font-size: 3vw; } }
+  @media (min-width: 1024px) {
+    body main .menu-text {
+      font-size: 1vw; } }
+  body footer {
+    bottom: 0;
+    width: 100%; }
+    body footer hr {
+      background-color: #ccc5b9; }
+    body footer #bottombutton {
+      filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%);
+      position: fixed;
+      bottom: 1vh;
+      right: 1vh; }
+    body footer #topbutton {
+      filter: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%);
+      position: fixed;
+      bottom: 1vh;
+      left: 1vh; }
+    body footer #bottombutton:hover {
+      filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+    body footer #topbutton:hover {
+      filter: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%); }
+
+/*# sourceMappingURL=default.css.map */

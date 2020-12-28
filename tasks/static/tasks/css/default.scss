@@ -1,0 +1,461 @@
+$alabaster: #E6E1D6;
+$alabaster-fltr: invert(97%) sepia(6%) saturate(445%) hue-rotate(342deg) brightness(96%) contrast(86%);
+$pale-silver: #ccc5b9;
+$pale-silver-fltr: invert(89%) sepia(12%) saturate(219%) hue-rotate(359deg) brightness(90%) contrast(87%);
+$middle-grey: #868179;
+$middle-grey-fltr: invert(54%) sepia(8%) saturate(359%) hue-rotate(358deg) brightness(92%) contrast(85%);
+$black-olive: #403d39;
+$black-olive-fltr: invert(22%) sepia(11%) saturate(315%) hue-rotate(355deg) brightness(93%) contrast(89%);
+$eerie-black: #252422;
+$eerie-black-fltr: invert(13%) sepia(10%) saturate(249%) hue-rotate(2deg) brightness(93%) contrast(96%);
+$old-gold: #D6BB57;
+$old-gold-fltr: invert(73%) sepia(58%) saturate(400%) hue-rotate(6deg) brightness(94%) contrast(86%);
+$vegas-gold: #B6A35D;
+$vegas-gold-fltr: invert(65%) sepia(50%) saturate(362%) hue-rotate(10deg) brightness(92%) contrast(84%);
+$silver: #C0C0C0;
+$silver-fltr: invert(82%) sepia(0%) saturate(1%) hue-rotate(185deg) brightness(94%) contrast(94%);
+$silver-chalice: #ACACAC;
+$silver-chalice-fltr: invert(85%) sepia(0%) saturate(70%) hue-rotate(190deg) brightness(82%) contrast(89%);
+$bronze: #BE8046;
+$bronze-fltr: invert(64%) sepia(5%) saturate(4016%) hue-rotate(348deg) brightness(83%) contrast(93%);
+$copper: #B87333;
+$copper-fltr: invert(42%) sepia(74%) saturate(472%) hue-rotate(348deg) brightness(100%) contrast(81%);
+
+%card {
+    background-color: $pale-silver;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $alabaster;
+    color: $eerie-black;
+    a {
+        color: $middle-grey;
+    }
+    a:hover {
+        color: $black-olive;
+    }
+    header {
+        nav {
+            background-color: $black-olive;
+            box-shadow: 0px 1px 2px 0.5px $eerie-black;
+            .navbar-brand {
+                font-family: "Sacramento", cursive;
+                font-weight: bold;
+                font-size: 25px;
+                color: $vegas-gold;
+                #brand-img {
+                    height: auto;
+                    filter: $vegas-gold-fltr;
+                }
+            }
+            .navbar-brand:hover {
+                color: $old-gold;
+                #brand-img {
+                    filter: $old-gold-fltr;
+                }
+            }
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(182, 163, 93, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+            }
+            .navbar-toggler-icon:active {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(214, 187, 87, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+            }
+            .navbar-nav {
+                .nav-item {
+                    p {
+                        color: $pale-silver;
+                        #user-img {
+                            filter: $pale-silver-fltr;
+                        }
+                    }
+                    .nav-link {
+                        color: $middle-grey;
+                        .icon {
+                            filter: $middle-grey-fltr;
+                        }
+                    }
+                    .nav-link:hover {
+                        color: $pale-silver;
+                        .icon {
+                            filter: $pale-silver-fltr;
+                        }
+                    }
+                    .active {
+                        color: $pale-silver;
+                        .icon-active {
+                            filter: $pale-silver-fltr;
+                        }
+                    }
+                    .active:hover {
+                        color: $pale-silver;
+                    }
+                }
+            }
+        }
+    }
+    main {
+        h1 {
+            @media (min-width: 0px) {
+                font-size: 20px;
+            }
+            @media (min-width: 241px) {
+                font-size: 25px;
+            }
+            @media (min-width: 360px) {
+                font-size: 35px;
+            }
+            @media (min-width: 411px) {
+                font-size: default;
+            }
+        }
+        .badge-complete {
+            background-color: $vegas-gold;
+            color: $alabaster;
+        }
+        .badge-incomplete {
+            background-color: $silver-chalice;
+            color: $alabaster;
+        }
+        .badge-ignored {
+            background-color: $copper;
+            color: $alabaster;
+        }
+        .badge-pending {
+            background-color: $middle-grey;
+            color: $alabaster;
+        }
+        .jumbotron {
+            background-color: $alabaster;
+            color: $eerie-black;
+        }
+        input[type=checkbox] {
+            height: 16px;
+            width: 16px;
+        }
+        .return {
+            filter: $middle-grey-fltr;
+        }
+        .return:hover {
+            filter: $black-olive-fltr;
+        }
+        .months {
+            filter: $black-olive-fltr;
+        }
+        .months:hover {
+            filter: $eerie-black-fltr;
+        }
+        .months-disabled {
+            filter: $middle-grey-fltr;
+        }
+        .table {
+            border-radius: 6px !important;
+            -moz-border-radius: 6px !important;
+            thead {
+                background-color: $black-olive;
+                color: $pale-silver;
+                th {
+                    border-bottom: none;
+                }
+            }
+            tbody {
+                background-color: $pale-silver;
+                color: $eerie-black;
+                td {
+                    .delete {
+                        filter: $black-olive-fltr;
+                    }
+                    .delete:hover {
+                        filter: $eerie-black-fltr;
+                    }
+                    .status {
+                        filter: $black-olive-fltr;
+                    }
+                    .status:hover {
+                        filter: $eerie-black-fltr;
+                    }
+                }
+            }
+            td, th {
+                border-top: 1px solid $alabaster;
+                vertical-align: middle;
+            }
+        }
+        .card {
+            .text-muted {
+                color: $middle-grey !important;
+            }
+            .card-header {
+                background-color: $black-olive;
+                color: $pale-silver;
+                .uneditable {
+                    filter: $middle-grey-fltr;
+                }
+                .editable {
+                    filter: $pale-silver-fltr;
+                }
+                .editable:hover {
+                    filter: $alabaster-fltr;
+                }
+            }
+            .card-body {
+                @extend %card;
+                img {
+                    filter: $middle-grey-fltr;
+                }
+            }
+        }
+        .menu {
+            @media (min-width: 0px) {
+                width: 50px;
+            }
+            @media (min-width: 241px) {
+                width: 70px;
+            }
+            @media (min-width: 360px) {
+                width: 104px;
+            }
+            @media (min-width: 411px) {
+                width: 114px;
+            }
+            @media (min-width: 600px) {
+                width: 166px;
+            }
+            @media (min-width: 768px) {
+                width: 213px;
+            }
+            @media (min-width: 1024px) {
+                width: 220px;
+            }
+            @media (min-width: 1920px) {
+                width: 240px;
+            }
+            @media (min-width: 2560px) {
+                width: 355px;
+            }
+            .menu-header {
+                background-color: $black-olive;
+                color: $pale-silver;
+                @media (min-width: 0px) {
+                    height: 20px;
+                }
+                @media (min-width: 241px) {
+                    height: 30px;
+                }
+                @media (min-width: 360px) {
+                    height: 40px;
+                }
+                @media (min-width: 411px) {
+                    height: 100%;
+                }
+            }
+            .menu-body {
+                @extend %card;
+                img {
+                    filter: $black-olive-fltr;
+                }
+                @media (min-width: 0px) {
+                    height: 50px - 20px;
+                    img {
+                        height: 30px;
+                    }
+                }
+                @media (min-width: 241px) {
+                    height: 60px - 15px;
+                    img {
+                        height: 30px;
+                    }
+                }
+                @media (min-width: 360px) {
+                    height: 115px  - 49px;
+                    img {
+                        height: 30px;
+                    }
+                }
+                @media (min-width: 411px) {
+                    height: 114px - 49px;
+                    img {
+                        height: 50px;
+                    }
+                }
+                @media (min-width: 600px) {
+                    height: 166px - 49px;
+                    img {
+                        height: 90px;
+                    }
+                }
+                @media (min-width: 768px) {
+                    height: 213px - 49px;
+                    img {
+                        height: 120px;
+                    }
+                }
+                @media (min-width: 1024px) {
+                    height: 220px - 49px;
+                    img {
+                        height: 150px;
+                    }
+                }
+                @media (min-width: 1920px) {
+                    height: 240px - 49px;
+                    img {
+                        height: 150px;
+                    }
+                }
+                @media (min-width: 2560px) {
+                    height: 355px - 49px;
+                    img {
+                        height: 200px;
+                    }
+                }
+            }
+        }
+        .menu:hover {
+            .menu-header {
+                background-color: $eerie-black;
+            }
+            .menu-body {
+                img {
+                    filter: $eerie-black-fltr !important;
+                }
+            }
+        }
+        .credits {
+            .list-group-item {
+                @extend %card;
+                @media (min-width: 768px) {
+                    width: 50%;
+                }
+                @media (min-width: 1024px) {
+                    width: 35%;
+                }
+            }
+        }
+        .btn-primary {
+            background-color: $black-olive;
+            border-color: $middle-grey;
+            color: $middle-grey;
+        }
+        .btn-primary:hover {
+            background-color: $eerie-black;
+            border-color: $black-olive;
+            color: $pale-silver;
+        }
+        .btn-primary:active {
+            background-color: $middle-grey !important;
+            border-color: $pale-silver !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        .btn-primary:focus {
+            background-color: $black-olive;
+            border-color: $middle-grey;
+            box-shadow: none;
+            outline: 2px solid $eerie-black;
+        }
+        .btn-primary:disabled {
+            background-color: $middle-grey;
+            border-color: $pale-silver;
+            color: $pale-silver;
+        }
+        .expandable {
+            filter: $black-olive-fltr;
+        }
+        .expandable:hover {
+            filter: $eerie-black-fltr;
+        }
+        input:focus {
+            border-color: $middle-grey !important;
+            outline: 2px solid $eerie-black !important;
+        }
+        .invalid:focus {
+            border-color: $middle-grey !important;
+            outline: 2px solid red !important;
+        }
+        .invalid {
+            outline: 2px solid red !important;
+        }
+        .invalid + small {
+            color: red !important;
+        }
+        .settings {
+            height: 462px;
+            .list-group {
+                @media (min-width: 0px) {
+                    width: 64px;
+                }
+                @media (min-width: 360px) {
+                    width: auto;
+                }
+
+                .list-group-item {
+                    background-color: $pale-silver;
+                    border: none;
+                    color: $black-olive;
+                    img {
+                        filter: $black-olive-fltr;
+                    }
+                }
+                .list-group-item:hover {
+                    color: $eerie-black;
+                    img {
+                        filter: $eerie-black-fltr;
+                    }
+                }
+                .list-group-item.active {
+                    background-color: $black-olive;
+                    color: $pale-silver;
+                    img {
+                        filter: $pale-silver-fltr;
+                    }
+                }
+                .list-group-item.active:hover {
+                    background-color: $eerie-black;
+                }
+            }
+        }
+        .menu-text {
+            @media (min-width: 0px) {
+                visibility: hidden;
+            }
+            @media (min-width: 360px) {
+                font-size: 4vw;
+                visibility: visible;
+            }
+            @media (min-width: 411px) {
+                font-size: 3vw;
+            }
+            @media (min-width: 1024px) {
+                font-size: 1vw;
+            }
+        }
+    }
+    footer {
+        bottom: 0;
+        width: 100%;
+        hr {
+            background-color: $pale-silver;
+        }
+        #bottombutton {
+            filter: $black-olive-fltr;
+            position: fixed;
+            bottom: 1vh;
+            right: 1vh;
+        }
+        #topbutton {
+            filter: $black-olive-fltr;
+            position: fixed;
+            bottom: 1vh;
+            left: 1vh;
+        }
+        #bottombutton:hover {
+            filter: $eerie-black-fltr;
+        }
+        #topbutton:hover {
+            filter: $eerie-black-fltr;
+        }
+    }
+}

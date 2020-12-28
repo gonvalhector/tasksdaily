@@ -1,0 +1,54 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Progress
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="{% static 'tasks/js/progress_result.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1>Progress</h1>
+            <h2 class="my-3">Last {{ days }} days:</h2>
+            <div id="raw-stats">
+                {% for stat in stats %}
+                    <h3>{{ stat.category.name }}</h3>
+                    <ul>
+                        {% for task in stat.tasks %}
+                            <li>
+                                <strong>{{ task.name }}</strong>
+                                <ul>
+                                    <li>Complete: <span class="badge badge-pill badge-complete">{{ task.complete }}</span></li>
+                                    <li>Incomplete: <span class="badge badge-pill badge-incomplete">{{ task.incomplete }}</span></li>
+                                    <li>Ignored: <span class="badge badge-pill badge-ignored">{{ task.ignored }}</span></li>
+                                    <li>Pending: <span class="badge badge-pill badge-pending">{{ task.pending }}</span></li>
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% empty %}
+                    <p>No logs found.</p>
+                {% endfor %}
+            </div>
+            <div id="graphs-stats" hidden>
+                {% for stat in stats %}
+                    <div class="categories" data-name="{{ stat.category.name }}">
+                        <h3>{{ stat.category.name }}</h3>
+                        {% for task in stat.tasks %}
+                            <div class="{{ stat.category.name }}-tasks" id="{{ task.name }}" data-name="{{ task.name }}" data-pending="{{ task.pending }}" data-complete="{{ task.complete }}" data-incomplete="{{ task.incomplete }}" data-ignored="{{ task.ignored }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% empty %}
+                    <p>No logs found.</p>
+                {% endfor %}
+            </div>
+            <p><a href="{% url 'progress' %}" class="return"><img src="{% static 'tasks/images/icons/return.svg' %}" alt="" class="mr-1">Return to select.</a></p>
+        </div>
+    </div>
+{% endblock %}

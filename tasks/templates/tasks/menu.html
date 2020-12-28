@@ -1,0 +1,105 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Menu
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col-4">
+            <a href="{% url 'daily' %}" title="Log your daily tasks">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Daily</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/daily.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'weekly' %}" title="Modify this week's logs">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Weekly</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/weekly.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'monthly' curr_y curr_m %}" title="View this month's logs">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Monthly</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/monthly.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-4">
+            <a href="{% url 'add_task' %}" title="Add a new task">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Add</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/add.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'progress' %}" title="Track your progress">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Progress</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/progress.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'past' %}" title="Browse all your past logs">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Past</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/past.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-4">
+            <a href="{% url 'tasks_overview' %}" title="Manage your current tasks">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Tasks</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/overview.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'profile' %}" title="Change your settings">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">Settings</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/settings.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{% url 'about' %}" title="About the app">
+                <div class="card menu mb-3">
+                    <div class="card-header menu-header text-center"><span class="menu-text">About</span></div>
+                    <div class="card-body menu-body d-flex align-items-center justify-content-center">
+                        <img src="{% static 'tasks/images/icons/about.svg' %}" alt="">
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

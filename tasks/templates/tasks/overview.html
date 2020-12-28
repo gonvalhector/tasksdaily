@@ -1,0 +1,164 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Tasks Overview
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'tasks/js/overview.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">All your tasks</h1>
+                <form action="{% url 'tasks_overview' %}" method="post">
+                    {% csrf_token %}
+                    <div class="table-responsive">
+                        <table class="table my-5">
+                            <thead>
+                                <tr>
+                                    <th colspan="17" scope="colgroup" class="text-center">Your Tasks</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="colgroup"><div class="text-center">Name</div></th>
+                                    <th colspan="4" scope="colgroup"><div class="text-center">Category</div></th>
+                                    <th scope="col"><div class="text-center">Monday</div></th>
+                                    <th scope="col"><div class="text-center">Tuesday</div></th>
+                                    <th scope="col"><div class="text-center">Wednesday</div></th>
+                                    <th scope="col"><div class="text-center">Thurdsday</div></th>
+                                    <th scope="col"><div class="text-center">Friday</div></th>
+                                    <th scope="col"><div class="text-center">Saturday</div></th>
+                                    <th scope="col"><div class="text-center">Sunday</div></th>
+                                    <th scope="col"><div class="text-center">Active</div></th>
+                                    <th scope="col"><div class="text-center">Delete</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for task in tasks %}
+                                    <tr>
+                                        <td colspan="4" scope="colgroup">
+                                            <input type="text" class="form-control text-center" id="task_{{ task.id }}_name" name="task_{{ task.id }}_name" value="{{ task.name }}">
+                                        </td>
+                                        <td colspan="4" scope="colgroup">
+                                            <select class="custom-select" id="task_{{ task.id }}_category" name="task_{{ task.id }}_category">
+                                                {% for category in categories %}
+                                                    <option value="{{ category.id }}" {% if category == task.category.first %}selected{% endif %}>{{ category.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day0" name="task_{{ task.id }}_day0" value="checked" data-type="weekday" {% if task.monday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day1" name="task_{{ task.id }}_day1" value="checked" data-type="weekday" {% if task.tuesday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day2" name="task_{{ task.id }}_day2" value="checked" data-type="weekday" {% if task.wednesday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day3" name="task_{{ task.id }}_day3" value="checked" data-type="weekday" {% if task.thursday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day4" name="task_{{ task.id }}_day4" value="checked" data-type="weekday" {% if task.friday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day5" name="task_{{ task.id }}_day5" value="checked" data-type="weekday" {% if task.saturday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_day6" name="task_{{ task.id }}_day6" value="checked" data-type="weekday" {% if task.sunday %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="task_{{ task.id }}_is_active" name="task_{{ task.id }}_is_active" data-type="is_active" value="checked" {% if task.is_active %}checked{% endif %}>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <a href="{% url 'delete_task' task.id %}" class="delete">
+                                                    <img src="{% static 'tasks/images/icons/delete.svg' %}" alt="Delete" title="Delete {{ task.name }}" id="task_{{ task.id }}_delete">
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <th colspan="17" scope="colgroup" class="text-center">You have no tasks.</th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table my-5">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" scope="colgroup" class="text-center">Your Categories</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col"><div class="text-center">Name</div></th>
+                                    <th scope="col"><div class="text-center">Delete</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td scope="col">
+                                            <input type="text" class="form-control text-center" id="category_{{ category.id }}_name" name="category_{{ category.id }}_name" value="{{ category.name }}">
+                                        </td>
+                                        <td scope="col">
+                                            <div class="text-center">
+                                                <a href="{% url 'delete_category' category.id %}" class="delete">
+                                                    <img src="{% static 'tasks/images/icons/delete.svg' %}" alt="Delete" title="Delete {{ category.name }}" id="category_{{ category.id }}_delete">
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <th colspan="12" scope="col" class="text-center">You have no categories.</th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% if categories %}
+                    <div class="text-center">
+                        <button type="submit" id="submit" class="btn btn-primary">Update Tasks</button>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

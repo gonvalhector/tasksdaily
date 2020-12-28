@@ -1,0 +1,75 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Monthly Logs
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">
+                <span class="mr-1">
+                    {% if last_y >= 2020 %}
+                        <a href="{% url 'monthly' last_y last_m %}"><img src="{% static 'tasks/images/icons/last.svg' %}" alt="Last Month Button" title="{{ last_month }}" class="months"></a>
+                    {% else %}
+                        <img src="{% static 'tasks/images/icons/last.svg' %}" alt="Last Month Button" class="months-disabled">
+                    {% endif %}
+                </span>
+                <span>{{ month }} {{ year_n }}</span>
+                <span class="ml-1">
+                    {% if next_y <= curr_y %}
+                        <a href="{% url 'monthly' next_y next_m %}"><img src="{% static 'tasks/images/icons/next.svg' %}" alt="Next Month Button" title="{{ next_month }}" class="months"></a>
+                    {% else %}
+                        <img src="{% static 'tasks/images/icons/next.svg' %}" alt="Next Month Button" class="months-disabled">
+                    {% endif %}
+                </span>
+            </h1>
+        </div>
+    </div>
+    {% for week in new_mdc %}
+        {% for day in week %}
+            {% if day.date.month == month_n %}
+                <div class="row my-3">
+                    <div class="col-12">
+                        <div class="card mb-3">
+                            <h4 class="card-header text-center">{{ day.date|date:"jS" }} (<span class="text-muted">{{ day.date|date:"l" }}</span>) {% if day.logs and day.weekday_n != None %}<a href="{% if curr_d == day.weekday_n %}{% url 'daily' %}{% else %}{% url 'edit' day.weekday_n %}{% endif %}"><img src="{% static 'tasks/images/icons/editable.svg' %}" alt="Edit" title="Edit" class="editable"></a>{% else %}<img src="{% static 'tasks/images/icons/uneditable.svg' %}" alt="Cannot Edit" title="Cannot Edit" class="uneditable">{% endif %}</h4>
+                            <div class="card-body">
+                                {% for category in day.categories %}
+                                    <h5 class="card-title text-center">{{ category.name }}:</h5>
+                                    {% for log in day.logs %}
+                                        {% if category.name == log.task.category.first.name %}
+                                            <p class="card-text text-center">{{ log.task.name }} -
+                                                <span>
+                                                    {% if log.status == 0 %}
+                                                        <img src="{% static 'tasks/images/icons/pending.svg' %}" alt="Pending Icon" title="Pending">
+                                                    {% elif log.status == 1 %}
+                                                        <img src="{% static 'tasks/images/icons/complete.svg' %}" alt="Complete Icon" title="Complete">
+                                                    {% elif log.status == 2 %}
+                                                        <img src="{% static 'tasks/images/icons/incomplete.svg' %}" alt="Incomplete Icon" title="Incomplete">
+                                                    {% else %}
+                                                        <img src="{% static 'tasks/images/icons/ignored.svg' %}" alt="Ignored Icon" title="Ignored">
+                                                    {% endif %}
+                                                </span>
+                                            </p>
+                                        {% endif %}
+                                    {% empty %}
+                                        <p class="card-text text-center text-muted">No logs.</p>
+                                    {% endfor %}
+                                {% empty %}
+                                    <p class="card-text text-center text-muted">No logs for any tasks.</p>
+                                {% endfor %}
+                                <h4 class="card-title text-center">Notes:</h4>
+                                {% if day.note %}
+                                    <p class="card-text text-center">{{ day.note }}</p>
+                                {% else %}
+                                    <p class="card-text text-center text-muted">No notes.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

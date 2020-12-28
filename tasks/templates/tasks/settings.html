@@ -1,0 +1,21 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    {% block subtitle %}{% endblock %} Settings
+{% endblock %}
+
+{% block main %}
+    {% with request.resolver_match.view_name as view_name %}
+        <div class="row my-3 settings">
+            <div class="col-4">
+                <div class="list-group text-center">
+                    <a href="{% url 'profile' %}" class="list-group-item list-group-item-action{% if view_name == 'profile' %} active{% endif %}"><img src="{% static 'tasks/images/icons/user.svg' %}" alt="" class="mb-1 mr-2"><span class="menu-text">Profile</span></a>
+                    <a href="{% url 'timezone' %}" class="list-group-item list-group-item-action{% if view_name == 'timezone' %} active{% endif %}"><img src="{% static 'tasks/images/icons/timezone.svg' %}" alt="" class="mb-1 mr-2"><span class="menu-text">Time Zone</span></a>
+                </div>
+            </div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    {% endwith %}
+{% endblock %}

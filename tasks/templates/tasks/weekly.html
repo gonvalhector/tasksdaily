@@ -1,0 +1,55 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Weekly Logs
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">Weekly logs</h1>
+        </div>
+    </div>
+    {% for weekday in week_logs %}
+        <div class="row my-3">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <h4 class="card-header text-center">{{ weekday.day }} (<span class="text-muted">{{ weekday.date }}</span>) {% if weekday.logs  %}<a href="{% if curr_d == weekday.weekday_n %}{% url 'daily' %}{% else %}{% url 'edit' weekday.weekday_n %}{% endif %}"><img src="{% static 'tasks/images/icons/editable.svg' %}" alt="Edit" title="Edit" class="editable"></a>{% else %}<img src="{% static 'tasks/images/icons/uneditable.svg' %}" alt="Cannot Edit" title="Cannot Edit" class="uneditable">{% endif %}</h4>
+                    <div class="card-body">
+                        {% for category in weekday.categories %}
+                            <h5 class="card-title text-center">{{ category.name }}:</h5>
+                            {% for log in weekday.logs %}
+                                {% if category.name == log.task.category.first.name %}
+                                    <p class="card-text text-center">{{ log.task.name }} -
+                                        <span>
+                                            {% if log.status == 0 %}
+                                                <img src="{% static 'tasks/images/icons/pending.svg' %}" alt="Pending Icon" title="Pending">
+                                            {% elif log.status == 1 %}
+                                                <img src="{% static 'tasks/images/icons/complete.svg' %}" alt="Complete Icon" title="Complete">
+                                            {% elif log.status == 2 %}
+                                                <img src="{% static 'tasks/images/icons/incomplete.svg' %}" alt="Incomplete Icon" title="Incomplete">
+                                            {% else %}
+                                                <img src="{% static 'tasks/images/icons/ignored.svg' %}" alt="Ignored Icon" title="Ignored">
+                                            {% endif %}
+                                        </span>
+                                    </p>
+                                {% endif %}
+                            {% empty %}
+                                <p class="card-text text-center text-muted">No logs.</p>
+                            {% endfor %}
+                        {% empty %}
+                            <p class="card-text text-center text-muted">No logs for any tasks.</p>
+                        {% endfor %}
+                        <h4 class="card-title text-center">Notes:</h4>
+                        {% if weekday.note %}
+                            <p class="card-text text-center">{{ weekday.note.text }}</p>
+                        {% else %}
+                            <p class="card-text text-center text-muted">No notes.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

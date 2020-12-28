@@ -37,7 +37,7 @@ else:
     SECRET_KEY = os.environ["TASKSDAILY_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -45,6 +45,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tasks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

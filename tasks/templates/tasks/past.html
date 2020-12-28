@@ -1,0 +1,42 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+   Past Logs
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'tasks/js/expandable.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">All past logs</h1>
+        </div>
+    </div>
+    {% for year in logs %}
+        <div class="row my-3">
+            <div class="col">
+                <h2 class="mb-3 text-center">{{ year.year_n }}
+                    <a data-toggle="collapse" href="#collapse-{{ year.year_n }}" role="button" aria-expanded="false" aria-controls="collapse">
+                        {% if curr_y == year.year_n %}
+                            <img src="{% static 'tasks/images/icons/contract.svg' %}" alt="Contract" title="Contract" class="expandable">
+                        {% else %}
+                            <img src="{% static 'tasks/images/icons/expand.svg' %}" alt="Expand" title="Expand" class="expandable">
+                        {% endif %}
+                    </a>
+                </h2>
+                <div class="collapse {% if curr_y == year.year_n %}show{% endif %}" id="collapse-{{ year.year_n }}">
+                    <ul class="list-unstyled">
+                        {% for month in year.months %}
+                            <li><a href="{% url 'monthly' year.year_n month.month_n %}"><h3 class="text-center">{{ month.name }}</h3></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-center">You have no past logs.</p>
+    {% endfor %}
+{% endblock %}

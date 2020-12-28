@@ -1,0 +1,78 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+   Daily Log
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'tasks/js/daily.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">Daily tasks log</h1>
+            <h2 class="mb-3 text-center">{{ weekday|date:"l" }}</h2>
+            {% if categories %}
+                <form class="my-3" action="{% url 'daily' %}" method="post">
+                    {% csrf_token %}
+                    {% for category in categories %}
+                        <table class="table mt-3 mb-5" id="table-{{ category.id }}">
+                            <thead>
+                                <tr>
+                                    <th colspan="3" scope="colgroup" class="text-center">{{ category.name }}</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="text-center">Task Name</th>
+                                    <th scope="col"></th>
+                                    <th scope="col" class="text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for log in logs %}
+                                    {% if log.task in category.tasks.all %}
+                                        <tr id="task-{{ log.task.id }}">
+                                            <td class="text-center">{{ log.task.name }}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="custom-select" id="{{ log.task.id }}" name="{{ log.task.id }}">
+                                                        {% for status in statuses %}
+                                                            <option value="{{ status.value }}" {% if log.status == status.value %}selected{% endif %}>{{ status.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="#table-{{ category.id }}" class="status" data-task="{{ log.task.id }}">
+                                                    {% if log.status == 0 %}
+                                                        <img src="{% static 'tasks/images/icons/pending.svg' %}" alt="Pending" title="Pending">
+                                                    {% elif log.status == 1 %}
+                                                        <img src="{% static 'tasks/images/icons/complete.svg' %}" alt="Complete" title="Complete">
+                                                    {% elif log.status == 2 %}
+                                                        <img src="{% static 'tasks/images/icons/incomplete.svg' %}" alt="Incomplete" title="Incomplete">
+                                                    {% else %}
+                                                        <img src="{% static 'tasks/images/icons/ignored.svg' %}" alt="Ignored" title="Ignored">
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                    <div class="form-group text-center">
+                        <label for="note">Notes (Optional)</label>
+                        <textarea class="form-control" name="note" id="note" rows="3">{% if note %}{{ note.text }}{% endif %}</textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" id="submit">Update Log</button>
+                    </div>
+                </form>
+            {% else %}
+                <p class="text-center">You have no tasks to log for today.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

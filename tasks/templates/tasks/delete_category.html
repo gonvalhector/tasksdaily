@@ -1,0 +1,32 @@
+{% extends 'tasks/layout.html' %}
+{% load static %}
+
+{% block title %}
+    Delete Category
+{% endblock %}
+
+{% block main %}
+    <div class="row my-3">
+        <div class="col">
+            <h1 class="mb-3 text-center">Delete <strong>{{ category.name }}</strong></h1>
+            <div class="text-center my-5">
+                <p>Are you sure you want to delete <strong>{{ category.name }}</strong>?</p>
+                {% if tasks_n > 0 %}
+                    <p>There were <strong>{{tasks_n }}</strong> tasks found associated with <strong>{{ category.name }}</strong>.</p>
+                {% else %}
+                    <p>You have no tasks associated with <strong>{{ category.name }}</strong>.</p>
+                {% endif %}
+            </div>
+            <form action="{% url 'delete_category' category_id %}" method="post">
+                {% csrf_token %}
+                <select class="custom-select mb-3" id="category_select" name="category_select">
+                        <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                </select>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Delete category</button>
+                </div>
+            </form>
+            <p><a href="{% url 'tasks_overview' %}" class="return"><img src="{% static 'tasks/images/icons/return.svg' %}" alt="" class="mr-1">Return to tasks.</a></p>
+        </div>
+    </div>
+{% endblock %}

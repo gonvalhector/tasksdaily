@@ -1,0 +1,29 @@
+{% extends 'tasks/settings.html' %}
+{% load static %}
+
+{% block subtitle %}
+    Time Zone
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'tasks/js/timezone.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="col">
+        <h1>Time Zone</h1>
+        <p class="my-auto">Today is: {% now "l F jS Y f A" %}</p>
+        <form action="{% url 'timezone' %}" method="post" class="my-3">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="timezone">Current Time Zone</label>
+                <select class="custom-select" id="timezone" name="timezone">
+                    {% for timezone in timezones %}
+                        <option value="{{ timezone }}" {% if timezone == user_tz %}selected{% endif %}>{{ timezone }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit">Update Time Zone</button>
+        </form>
+    </div>
+{% endblock %}

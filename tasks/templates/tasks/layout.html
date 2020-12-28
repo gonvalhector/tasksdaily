@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'tasks/css/default.css' %}">
+        <title>{% block title %}{% endblock %} | TasksDaily</title>
+        {% block script %}{% endblock %}
+    </head>
+    <body>
+        <header class="sticky-top">
+            <nav class="navbar navbar-expand-lg">
+                <a href="{% url 'index' %}" class="navbar-brand">
+                    <img src="{% static 'tasks/images/icons/brand.svg' %}" id="brand-img" alt="TasksDaily home" class="mb-2">
+                    TasksDaily
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse w-100 order-2 dual-collapse2" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        {% with request.resolver_match.view_name as view_name %}
+                            {% if user.is_authenticated %}
+                            <li class="nav-item mr-5">
+                                <p class="welcome my-2"><i>Welcome</i>, {% if user.first_name and user.last_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}<img src="{% static 'tasks/images/icons/user.svg' %}" id="user-img" class="mx-1" alt="">!</p>
+                            </li>
+                            {% if view_name == 'index' %}
+                            <li class="nav-item active">
+                                <a class="nav-link active" href="{% url 'index' %}"><img src="{% static 'tasks/images/icons/menu.svg' %}" class="icon-active mr-1" alt="">Menu</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'index' %}"><img src="{% static 'tasks/images/icons/menu.svg' %}" class="icon mr-1" alt="">Menu</a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}"><img src="{% static 'tasks/images/icons/logout.svg' %}" class="icon mr-1" alt="">Log Out</a>
+                            </li>
+                            {% else %}
+                                {% if view_name == 'register' %}
+                                <li class="nav-item active">
+                                    <a class="nav-link active" href="#"><img src="{% static 'tasks/images/icons/register.svg' %}" class="icon-active mr-1" alt="">Register <span class="sr-only">(current)</span></a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'register' %}"><img src="{% static 'tasks/images/icons/register.svg' %}" class="icon mr-1" alt="">Register</a>
+                                </li>
+                                {% endif %}
+                                {% if view_name == 'login' %}
+                                <li class="nav-item active">
+                                    <a class="nav-link active" href="#"><img src="{% static 'tasks/images/icons/login.svg' %}" class="icon-active mr-1" alt="">Log In <span class="sr-only">(current)</span></a>
+                                </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'login' %}"><img src="{% static 'tasks/images/icons/login.svg' %}" class="icon mr-1" alt="">Log In</a>
+                                </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endwith %}
+                    </ul>
+                </div>
+            </nav>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.DEBUG %}dark{% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO  %}info{% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}success{% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}warning{% else %}danger{% endif %} alert-dismissible fade show text-center" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </header>
+        <main>
+            <div id="top"></div>
+            <div class="container">
+                {% block main %}{% endblock %}
+            </div>
+            <div id="bottom"></div>
+        </main>
+        <footer>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <hr>
+                        <div id="topbutton">
+                            <a href="#top"><img src="{% static 'tasks/images/icons/top.svg' %}" alt="Link to the top" title="Top"></a>
+                        </div>
+                        <div class="text-center">
+                            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br>
+                            The content of this project is licensed under a <a class="license-link" rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br>
+                            The source code of this project is licensed under a <strong>MIT License</strong>.<br>
+                            Copyright &copy; 2020 <a href="https://gonvalhector.github.io/">Hector Gonzalez</a>
+                        </div>
+                        <div id="bottombutton">
+                            <a href="#bottom"><img src="{% static 'tasks/images/icons/bottom.svg' %}" alt="Link to the bottom" title="Bottom"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    </body>
+</html>
