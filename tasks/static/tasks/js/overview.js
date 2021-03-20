@@ -3,7 +3,6 @@ function submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekday
     Disable or enable the submit button according to the
     state of the input checks.
     */
-    let submit = document.getElementById("submit");
     // Iterate over all the input checks
     let inputsCheck = false;
     for (let i = 0; i < inputsChecks.length; i++) {
@@ -46,7 +45,7 @@ function submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekday
             let unchecked = 0;
             // Check for valid changes
             for (let j = 0; j < weekdays; j++) {
-                if (weekdaysBoxes[i][j].checked === false) {
+                if (weekdaysBoxes[i][j].prop("checked") === false) {
                         unchecked++;
                     }
             }
@@ -60,33 +59,32 @@ function submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekday
             }
         }
     }
-    submit.disabled = (inputsCheck || categorySelectsCheck || weekdaysCheck || isActiveCheck === true) ? false : true;
+    let submit = (inputsCheck || categorySelectsCheck || weekdaysCheck || isActiveCheck === true) ? false : true;
+    $("#submit").prop("disabled", submit);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+$(function() {
     // Declare variables related to the task name and category name inputs
-    let inputs = document.getElementsByClassName("form-control");
-    let inputsLength = inputs.length;
+    let $inputs = $(".form-control");
     let inputsChecks = [];
-    // Add original values from inputs to list
     let inputsOrigValues = [];
-    for (let i = 0; i < inputsLength; i++) {
-        inputsOrigValues.push(inputs.item(i).value);
+    // Add original values from inputs to list
+    $inputs.each(function(index, element) {
+        inputsOrigValues.push($(this).val());
         inputsChecks.push(false);
-    }
+    });
     // Declare variables related to the task category selects
-    let categorySelects = document.getElementsByClassName("custom-select");
-    let categorySelectsLength = categorySelects.length;
+    let $categorySelects = $(".custom-select");
+    let categorySelectsLength = $categorySelects.length;
     let categorySelectsChecks = [];
-    // Add original values from selects to list
     let selectsOrigValues = [];
-    for (let i = 0; i < categorySelectsLength; i++) {
-        selectsOrigValues.push(categorySelects.item(i).value);
+    // Add original values from selects to list
+    $categorySelects.each(function(index, element) {
+        selectsOrigValues.push($(this).val());
         categorySelectsChecks.push(false);
-    }
+    });
     // Declare variables related to the weekday and active checkboxes
-    let checkboxes = document.getElementsByClassName("form-check-input");
-    let checkboxesLength = checkboxes.length;
+    let $checkboxes = $(".form-check-input");
     let allWeekdayBoxes = [];
     let allWeekdaysOrigValues = [];
     let allWeekdaysChecks = [];
@@ -95,19 +93,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let isActiveChecks = [];
     // Sort cheboxes by weekday and by is_active
     // Add original checked boolean from checkboxes to corresponding lists
-    for (let i = 0; i < checkboxesLength; i++) {
-        let checkbox = checkboxes.item(i);
-        if (checkbox.dataset.type == "weekday") {
-            allWeekdayBoxes.push(checkbox);
-            allWeekdaysOrigValues.push(checkbox.checked);
+    $checkboxes.each(function(index, element) {
+        let $checkbox = $(this);
+        if ($checkbox.attr("data-type") == "weekday") {
+            allWeekdayBoxes.push($checkbox);
+            allWeekdaysOrigValues.push($checkbox.prop("checked"));
             allWeekdaysChecks.push(false);
         }
         else {
-            isActiveBoxes.push(checkbox);
-            isActiveOrigValues.push(checkbox.checked);
+            isActiveBoxes.push($checkbox);
+            isActiveOrigValues.push($checkbox.prop("checked"));
             isActiveChecks.push(false);
         }
-    }
+    });
     // Sort through weekdays by row by slicing the orig array
     // Define arrays to add the sorted weekdays into
     let weekdaysBoxes = [];
@@ -117,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const start = 0;
     const end = 7;
     // Define number of days on a week
-    const n = 7;
+    const n = end;
     for (let i = 0; i < categorySelectsLength; i++) {
         let factor = n * i;
         let boxRow = allWeekdayBoxes.slice(start + factor, end + factor);
@@ -129,62 +127,63 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Disable submit button
     submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekdaysChecks, isActiveChecks);
-    // Event listeners for inputs
-    for (let i = 0; i < inputsLength; i++) {
-        let input = inputs.item(i);
-        let origValue = inputsOrigValues[i];
-        input.addEventListener("input", () => {
+    // Iterate over each input
+    $inputs.each(function(index, element) {
+        let $input = $(this);
+        let origValue = inputsOrigValues[index];
+        $input.on("input", function() {
             let count = 0;
-            if (input.value != "") {
+            if ($input.val() != "") {
                 count++;
             }
-            if (input.value.length < 64) {
+            if ($input.val().length < 64) {
                 count++;
             }
-            if (input.value !== origValue) {
+            if ($input.val() !== origValue) {
                 count++;
             }
             let isValid = (count === 3) ? true : false;
-            inputsChecks[i] = isValid;
+            inputsChecks[index] = isValid;
             submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekdaysChecks, isActiveChecks);
         });
-    }
-    // Event listeners for selects
-    for (let i = 0; i < categorySelectsLength; i++) {
-        let select = categorySelects.item(i);
-        let origValue = selectsOrigValues[i];
-        select.addEventListener("change", () => {
+    });
+    // Iterate over each select
+    $categorySelects.each(function(index, element) {
+        let $select = $(this);
+        let origValue = selectsOrigValues[index];
+        $select.on("change", function() {
             let count = 0;
-            if (select.value != "") {
+            if ($select.val() != "") {
                 count++;
             }
-            if (select.value !== origValue) {
+            if ($select.val() !== origValue) {
                 count++;
             }
             let isValid = (count === 2) ? true : false;
-            categorySelectsChecks[i] = isValid;
+            categorySelectsChecks[index] = isValid;
             submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekdaysChecks, isActiveChecks);
         });
-    }
-    // Event listeners for checkboxes
+    });
+    // Iterate over each checkbox
     for (let i = 0; i < categorySelectsLength; i++) {
-        // Event listeners for weekdays checkboxes
+        // Iterate over weekdays checkboxes
         for (let j = 0; j < n; j++) {
-            let weekdaysBox = weekdaysBoxes[i][j];
+            let $weekdaysBox = weekdaysBoxes[i][j];
             let weekdaysOrigValue = weekdaysOrigValues[i][j];
-            weekdaysBox.addEventListener("change", () => {
-                let isValid = (weekdaysBox.checked != weekdaysOrigValue) ? true : false;
+            $weekdaysBox.on("change", function() {
+                let isValid = ($weekdaysBox.prop("checked") != weekdaysOrigValue) ? true : false;
                 weekdaysChecks[i][j] = isValid;
                 submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekdaysChecks, isActiveChecks);
             });
         }
-        // Event listeners for is active checkboxes
-        let isActiveBox = isActiveBoxes[i];
+        // Iterate over is active checkboxes
+        let $isActiveBox = isActiveBoxes[i];
         let isActiveOrigValue = isActiveOrigValues[i];
-        isActiveBox.addEventListener("change", () => {
-            let isValid = (isActiveBox.checked != isActiveOrigValue) ? true : false;
+        $isActiveBox.on("change", function() {
+            let isValid = ($isActiveBox.prop("checked") != isActiveOrigValue) ? true : false;
             isActiveChecks[i] = isValid;
             submitState(inputsChecks, categorySelectsChecks, weekdaysBoxes, weekdaysChecks, isActiveChecks);
         });
     }
+
 });

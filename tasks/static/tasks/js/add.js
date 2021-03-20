@@ -1,55 +1,24 @@
-function userHelp(element) {
+function userHelp($element) {
     /*
     Select the small element with tips
     next to the input element that triggered
     the event and make it visible or hidden.
     */
     let tip;
-    if (element.nextSibling.id === undefined) {
-        let whitespace = element.nextSibling;
-        tip = whitespace.nextSibling;
+    if ($element.next().attr("id") === undefined) {
+        let whitespace = $element.next();
+        tip = whitespace.next();
     }
     else {
-        tip = element.nextSibling;
+        tip = $element.next();
     }
-    let className = element.className;
+    let className = $element.attr("class");
     let subStr = " invalid";
     if (className.includes(subStr) === true) {
-        tip.hidden = false;
+        tip.show();
     }
     else {
-        tip.hidden = (tip.hidden === true) ? false : true;
-    }
-}
-
-function styleAsInvalid(element, check) {
-    /*
-    Add the invalid class to elements that have an
-    input check of false.
-    */
-    let className = element.className;
-    let subStr = " invalid";
-    let tip;
-    if (element.nextSibling.id === undefined) {
-        let whitespace = element.nextSibling;
-        tip = whitespace.nextSibling;
-    }
-    else {
-        tip = element.nextSibling;
-    }
-    // Add the invalid class if the element does not have it yet
-    if (check === false) {
-        if (className.includes(subStr) === false) {
-            element.className = className + " invalid";
-            tip.hidden = false;
-        }
-    }
-    // Remove the invalid class if the element does not need it anymore
-    else {
-        if (className.includes(subStr) === true) {
-            element.className = className.replace(subStr, "");
-            tip.hidden = true;
-        }
+        tip.toggle();
     }
 }
 
@@ -58,81 +27,114 @@ function submitState(categoryCheck, taskNameCheck, weekdaysCheck) {
     Disable or enable the submit button according to the
     state of the input checks.
     */
-    let submit = document.getElementById("submit");
-    submit.disabled = (categoryCheck && taskNameCheck && weekdaysCheck === true) ? false : true;
+    let submit = (categoryCheck && taskNameCheck && weekdaysCheck === true) ? false : true;
+    $("#submit").prop("disabled", submit);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    let categorySelect;
-    let categoryCheck;
-    if (document.getElementById("categorySelect")) {
-        categorySelect = document.getElementById("categorySelect");
+function styleAsInvalid($element, check) {
+    /*
+    Add the invalid class to elements that have an
+    input check of false.
+    */
+    let className = $element.attr("class");
+    let subStr = " invalid";
+    let tip;
+    if ($element.next().attr("id") === undefined) {
+        let whitespace = $element.next();
+        tip = whitespace.next();
     }
     else {
-        categorySelect = null;
+        tip = $element.next();
+    }
+    // Add the invalid class if the element does not have it yet
+    if (check === false) {
+        if (className.includes(subStr) === false) {
+            className = className + " invalid";
+            $element.attr("class", className)
+            tip.show();
+        }
+    }
+    // Remove the invalid class if the element does not need it anymore
+    else {
+        if (className.includes(subStr) === true) {
+            className = className.replace(subStr, "");
+            $element.attr("class", className)
+            tip.hide();
+        }
+    }
+}
+
+$(function() {
+    let $categorySelect;
+    let categoryCheck;
+    if ($("#categorySelect")) {
+        $categorySelect = $("#categorySelect");
+    }
+    else {
+        $categorySelect = null;
     }
     categoryCheck = false;
-    let categoryNameInput = document.getElementById("categoryName");
-    let categoryNameHelp = document.getElementById("categoryNameHelp");
+    let $categoryNameInput = $("#categoryName");
+    let $categoryNameHelp = $("#categoryNameHelp");
     // Hide small text help for user input
-    categoryNameHelp.hidden = true;
-    let taskNameInput = document.getElementById("taskName");
+    $categoryNameHelp.hide();
+    let $taskNameInput = $("#taskName");
     let taskNameCheck = false;
-    let taskNameHelp = document.getElementById("taskNameHelp");
+    let $taskNameHelp = $("#taskNameHelp");
     // Hide small text help for user input
-    taskNameHelp.hidden = true;
-    let weekdaysCheckboxes = document.getElementsByClassName("form-check-input");
-    let weekdaysLength = weekdaysCheckboxes.length;
+    $taskNameHelp.hide();
+    let $weekdaysCheckboxes = $(".form-check-input");
+    let weekdaysLength = $weekdaysCheckboxes.length;
     let weekdaysCheck = false;
     // Disable submit button
     submitState(categoryCheck, taskNameCheck, weekdaysCheck);
-    // Event listeners for category select
-    if (categorySelect) {
-        categorySelect.addEventListener("change", () => {
-            let isValid = (categorySelect.value != "") ? true : false;
+    // Events for category select
+    if ($categorySelect) {
+        $categorySelect.on("change", function() {
+            let isValid = ($categorySelect.val()) ? true : false;
             categoryCheck = isValid;
             submitState(categoryCheck, taskNameCheck, weekdaysCheck);
         });
     }
-    // Event listeners for task name input
-    categoryNameInput.addEventListener("focus", () => {
-        userHelp(categoryNameInput);
+    // Events for task name input
+    $categoryNameInput.on("focus", function() {
+        userHelp($categoryNameInput);
     });
-    categoryNameInput.addEventListener("blur", () => {
-        userHelp(categoryNameInput);
-        styleAsInvalid(categoryNameInput, categoryCheck);
+    $categoryNameInput.on("blur", function() {
+        userHelp($categoryNameInput);
+        styleAsInvalid($categoryNameInput, categoryCheck);
     });
-    categoryNameInput.addEventListener("input", () => {
+    $categoryNameInput.on("input", function() {
         let count = 0;
-        if (categoryNameInput.value != "") {
+        if ($categoryNameInput.val()) {
             count++;
         }
-        if (categoryNameInput.value.length < 64) {
+        if ($categoryNameInput.val().length < 64) {
             count++;
         }
         let isValid = (count === 2) ? true : false;
-        if (categorySelect) {
-            if (categorySelect.value != "") {
+        if ($categorySelect) {
+            if ($categorySelect.val()) {
                 isValid = true;
             }
         }
         categoryCheck = isValid;
         submitState(categoryCheck, taskNameCheck, weekdaysCheck);
     });
-    // Event listeners for task name input
-    taskNameInput.addEventListener("focus", () => {
-        userHelp(taskNameInput);
+    // Events for task name input
+    $taskNameInput.on("focus", function() {
+        userHelp($taskNameInput);
     });
-    taskNameInput.addEventListener("blur", () => {
-        userHelp(taskNameInput);
-        styleAsInvalid(taskNameInput, taskNameCheck);
+    $taskNameInput.on("blur", function() {
+        userHelp($taskNameInput);
+        styleAsInvalid($taskNameInput, taskNameCheck);
     });
-    taskNameInput.addEventListener("input", () => {
+    $taskNameInput.on("input", function() {
         let count = 0;
-        if (taskNameInput.value != "") {
+        if ($taskNameInput.val()) {
             count++;
         }
-        if (taskNameInput.value.length < 64) {
+        if ($taskNameInput.val().length < 64) {
             count++;
         }
         let isValid = (count === 2) ? true : false;
@@ -141,9 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     // Event listeners for weekdaysCheckboxes
     let checksCount = 0;
-    for (let i = 0; i < weekdaysLength; i++) {
-        weekdaysCheckboxes.item(i).addEventListener("change", () => {
-            if (weekdaysCheckboxes.item(i).checked === true) {
+    $weekdaysCheckboxes.each(function(index, element) {
+        let $weekdaysCheckbox = $(this);
+        $weekdaysCheckbox.on("change", function() {
+            if ($weekdaysCheckbox.prop("checked") === true) {
                 checksCount++;
             }
             else {
@@ -153,5 +156,5 @@ document.addEventListener("DOMContentLoaded", () => {
             weekdaysCheck = isValid;
             submitState(categoryCheck, taskNameCheck, weekdaysCheck);
         });
-    }
+    });
 });

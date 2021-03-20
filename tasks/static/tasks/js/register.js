@@ -1,24 +1,24 @@
-function userHelp(element) {
+function userHelp($element) {
     /*
     Select the small element with tips
     next to the input element that triggered
     the event and make it visible or hidden.
     */
     let tip;
-    if (element.nextSibling.id === undefined) {
-        let whitespace = element.nextSibling;
-        tip = whitespace.nextSibling;
+    if ($element.next().attr("id") === undefined) {
+        let whitespace = $element.next();
+        tip = whitespace.next();
     }
     else {
-        tip = element.nextSibling;
+        tip = $element.next();
     }
-    let className = element.className;
+    let className = $element.attr("class");
     let subStr = " invalid";
     if (className.includes(subStr) === true) {
-        tip.hidden = false;
+        tip.show();
     }
     else {
-        tip.hidden = (tip.hidden === true) ? false : true;
+        tip.toggle();
     }
 }
 
@@ -27,101 +27,103 @@ function submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, p
     Disable or enable the submit button according to the
     state of the input checks.
     */
-    let submit = document.getElementById("submit");
-    submit.disabled = (usernameCheck && firstNameCheck && lastNameCheck && emailCheck && passwordCheck && passwordConfirmCheck === true) ? false : true;
+    let submit = (usernameCheck && firstNameCheck && lastNameCheck && emailCheck && passwordCheck && passwordConfirmCheck === true) ? false : true;
+    $("#submit").prop("disabled", submit);
 }
 
-function styleAsInvalid(element, check) {
+function styleAsInvalid($element, check) {
     /*
     Add the invalid class to elements that have an
     input check of false.
     */
-    let className = element.className;
+    let className = $element.attr("class");
     let subStr = " invalid";
     let tip;
-    if (element.nextSibling.id === undefined) {
-        let whitespace = element.nextSibling;
-        tip = whitespace.nextSibling;
+    if ($element.next().attr("id") === undefined) {
+        let whitespace = $element.next();
+        tip = whitespace.next();
     }
     else {
-        tip = element.nextSibling;
+        tip = $element.next();
     }
     // Add the invalid class if the element does not have it yet
     if (check === false) {
         if (className.includes(subStr) === false) {
-            element.className = className + " invalid";
-            tip.hidden = false;
+            className = className + " invalid";
+            $element.attr("class", className)
+            tip.show();
         }
     }
     // Remove the invalid class if the element does not need it anymore
     else {
         if (className.includes(subStr) === true) {
-            element.className = className.replace(subStr, "");
-            tip.hidden = true;
+            className = className.replace(subStr, "");
+            $element.attr("class", className)
+            tip.hide();
         }
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+$(function() {
     // Select username input and small text elements
-    let usernameInput = document.getElementById("username");
-    let usernameHelp = document.getElementById("usernameHelp");
+    let $usernameInput = $("#username");
+    let $usernameHelp = $("#usernameHelp");
     // Hide small text help for user input
-    usernameHelp.hidden = true;
+    $usernameHelp.hide();
     // Set username input check to false
     let usernameCheck = false;
     // Select first name input and small text elements
-    let firstNameInput = document.getElementById("first_name");
-    let firstNameHelp = document.getElementById("firstNameHelp");
+    let $firstNameInput = $("#first_name");
+    let $firstNameHelp = $("#firstNameHelp");
     // Hide small text help for first name input
-    firstNameHelp.hidden = true;
+    $firstNameHelp.hide();
     // Set first name input check to true because it's optional
     let firstNameCheck = true;
     // Select last name input and small text elements
-    let lastNameInput = document.getElementById("last_name");
-    let lastNameHelp = document.getElementById("lastNameHelp");
+    let $lastNameInput = $("#last_name");
+    let $lastNameHelp = $("#lastNameHelp");
     // Hide small text help for last name input
-    lastNameHelp.hidden = true;
+    $lastNameHelp.hide();
     // Set last name input check to true because it's optional
     let lastNameCheck = true;
     // Select email input and small text elements
-    let emailInput = document.getElementById("email");
-    let emailHelp = document.getElementById("emailHelp");
+    let $emailInput = $("#email");
+    let $emailHelp = $("#emailHelp");
     // Hide small text help for email input
-    emailHelp.hidden = true;
+    $emailHelp.hide();
     // Set email input check to false
     let emailCheck = false;
     // Select password input and small text elements
-    let passwordInput = document.getElementById("password");
-    let passwordHelp = document.getElementById("passwordHelp");
+    let $passwordInput = $("#password");
+    let $passwordHelp = $("#passwordHelp");
     // Hide small text help for password input
-    passwordHelp.hidden = true;
+    $passwordHelp.hide();
     // Set password input check to false
     let passwordCheck = false;
     // Select password confirm input
-    let passwordConfirmInput = document.getElementById("password_confirm");
+    let $passwordConfirmInput = $("#password_confirm");
     // Set password confirm input check to false
     let passwordConfirmCheck = false;
     // Disable submit button
     submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, passwordCheck, passwordConfirmCheck);
-    // Event listeners for username input
-    usernameInput.addEventListener("focus", () => {
-        userHelp(usernameInput);
+    // Events for username input
+    $usernameInput.on("focus", function() {
+        userHelp($usernameInput);
     });
-    usernameInput.addEventListener("blur", () => {
-        userHelp(usernameInput);
-        styleAsInvalid(usernameInput, usernameCheck);
+    $usernameInput.on("blur", function() {
+        userHelp($usernameInput);
+        styleAsInvalid($usernameInput, usernameCheck);
     });
-    usernameInput.addEventListener("input", () => {
+    $usernameInput.on("input", function() {
         let count = 0;
-        if (usernameInput.value != "") {
+        if ($usernameInput.val() != "") {
             count++;
         }
-        if (usernameInput.value.length <= 150) {
+        if ($usernameInput.val().length <= 150) {
             count++;
         }
         let pattern = /([^-_a-z0-9])+/i;
-        let result = pattern.test(usernameInput.value);
+        let result = pattern.test($usernameInput.val());
         if (result === false) {
             count++;
         }
@@ -129,47 +131,47 @@ document.addEventListener("DOMContentLoaded", () => {
         usernameCheck = isValid;
         submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, passwordCheck, passwordConfirmCheck);
     });
-    // Event listeners for first name input
-    firstNameInput.addEventListener("focus", () => {
-        userHelp(firstNameInput);
+    // Events for first name input
+    $firstNameInput.on("focus", function() {
+        userHelp($firstNameInput);
     });
-    firstNameInput.addEventListener("blur", () => {
-        userHelp(firstNameInput);
-        styleAsInvalid(firstNameInput, firstNameCheck);
+    $firstNameInput.on("blur", function() {
+        userHelp($firstNameInput);
+        styleAsInvalid($firstNameInput, firstNameCheck);
     });
-    firstNameInput.addEventListener("input", () => {
-        let isValid = (firstNameInput.value.length <= 150) ? true : false;
+    $firstNameInput.on("input", function() {
+        let isValid = ($firstNameInput.val().length <= 150) ? true : false;
         firstNameCheck = isValid;
         submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, passwordCheck, passwordConfirmCheck);
     });
-    // Event listeners for last name input
-    lastNameInput.addEventListener("focus", () => {
-        userHelp(lastNameInput);
+    // Events for last name input
+    $lastNameInput.on("focus", function() {
+        userHelp($lastNameInput);
     });
-    lastNameInput.addEventListener("blur", () => {
-        userHelp(lastNameInput);
-        styleAsInvalid(lastNameInput, lastNameCheck);
+    $lastNameInput.on("blur", function() {
+        userHelp($lastNameInput);
+        styleAsInvalid($lastNameInput, lastNameCheck);
     });
-    lastNameInput.addEventListener("input", () => {
-        let isValid = (lastNameInput.value.length <= 150) ? true : false;
+    $lastNameInput.on("input", function() {
+        let isValid = ($lastNameInput.val().length <= 150) ? true : false;
         lastNameCheck = isValid;
         submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, passwordCheck, passwordConfirmCheck);
     });
-    // Event listeners for email input
-    emailInput.addEventListener("focus", () => {
-        userHelp(emailInput);
+    // Events for email input
+    $emailInput.on("focus", function() {
+        userHelp($emailInput);
     });
-    emailInput.addEventListener("blur", () => {
-        userHelp(emailInput);
-        styleAsInvalid(emailInput, emailCheck);
+    $emailInput.on("blur", function() {
+        userHelp($emailInput);
+        styleAsInvalid($emailInput, emailCheck);
     });
-    emailInput.addEventListener("input", () => {
+    $emailInput.on("input", function() {
         let count = 0;
-        if (emailInput.value != "") {
+        if ($emailInput.val() != "") {
             count++;
         }
         let pattern = /([@])/;
-        let result = pattern.test(emailInput.value);
+        let result = pattern.test($emailInput.val());
         if (result === true) {
             count++;
         }
@@ -177,47 +179,47 @@ document.addEventListener("DOMContentLoaded", () => {
         emailCheck = isValid;
         submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, passwordCheck, passwordConfirmCheck);
     });
-    // Event listeners for password input
-    passwordInput.addEventListener("focus", () => {
-        userHelp(passwordInput);
+    // Events for password input
+    $passwordInput.on("focus", function() {
+        userHelp($passwordInput);
     });
-    passwordInput.addEventListener("blur", () => {
-        userHelp(passwordInput);
-        styleAsInvalid(passwordInput, passwordCheck);
+    $passwordInput.on("blur", function() {
+        userHelp($passwordInput);
+        styleAsInvalid($passwordInput, passwordCheck);
     });
-    passwordInput.addEventListener("input", () => {
+    $passwordInput.on("input", function() {
         let count = 0;
-        if (passwordInput.value.length >= 8) {
+        if ($passwordInput.val().length >= 8) {
             count++;
         }
         let pattern = /\D/;
-        let result = pattern.test(passwordInput.value);
+        let result = pattern.test($passwordInput.val());
         if (result === true) {
             count++;
         }
-        if (passwordInput.value !== usernameInput.value) {
+        if ($passwordInput.val() !== $usernameInput.val()) {
             count++;
         }
-        if (passwordInput.value !== firstNameInput.value) {
+        if ($passwordInput.val() !== $firstNameInput.val()) {
             count++;
         }
-        if (passwordInput.value !== lastNameInput.value) {
+        if ($passwordInput.val() !== $lastNameInput.val()) {
             count++;
         }
-        if (passwordInput.value !== emailInput.value) {
+        if ($passwordInput.val() !== $emailInput.val()) {
             count++;
         }
         let isValid = (count === 6) ? true : false;
         passwordCheck = isValid;
         submitState(usernameCheck, firstNameCheck, lastNameCheck, emailCheck, passwordCheck, passwordConfirmCheck);
     });
-    // Event listeners for password confirm input
-    passwordConfirmInput.addEventListener("blur", () => {
-        styleAsInvalid(passwordConfirmInput, passwordConfirmCheck);
+    // Events for password confirm input
+    $passwordConfirmInput.on("blur", function() {
+        styleAsInvalid($passwordConfirmInput, passwordConfirmCheck);
     });
-    passwordConfirmInput.addEventListener("input", () => {
+    $passwordConfirmInput.on("input", function() {
         let count = 0;
-        if (passwordConfirmInput.value === passwordInput.value) {
+        if ($passwordConfirmInput.val() === $passwordInput.val()) {
             count++;
         }
         let isValid = (count === 1) ? true : false;

@@ -1,8 +1,14 @@
-// Callback that creates and populates a data table,
-// instantiates the pie chart, passes in the data and
-// draws it.
 function drawChart() {
+    /*
+    Callback that creates and populates a data table,
+    instantiates the column chart, passes in the data and
+    draws it
+    */
+
+
+    // Declare viewport view
     let vWidth = window.innerWidth;
+    // Define chart width according to viewport width
     let width;
     switch(true) {
         case (vWidth >= 0 && vWidth < 241):
@@ -29,18 +35,19 @@ function drawChart() {
         case (vWidth >= 1920 && vWidth < 2560):
             width = 1024;
     }
-    let categories = document.getElementsByClassName("categories");
-    for (let i = 0; i < categories.length; i++) {
-        let categoryName = categories.item(i).dataset.name;
+    // Iterate over each category
+    $(".categories").each(function(index, element) {
+        let categoryName = $(this).attr("data-name");
         let tasksCategory = categoryName + "-" + "tasks";
-        let tasks = document.getElementsByClassName(tasksCategory);
-        for (let j = 0; j < tasks.length; j++) {
-            let task = tasks.item(j);
-            let taskName = task.dataset.name;
-            let taskComplete = Number(task.dataset.complete);
-            let taskIncomplete = Number(task.dataset.incomplete);
-            let taskIgnored = Number(task.dataset.ignored);
-            let taskPending = Number(task.dataset.pending);
+        tasksCategory = tasksCategory.replace(/ /g, ".");
+        // Draw a chart for every task
+        $("." + tasksCategory).each(function(i, el) {
+            let $task = $(this);
+            let taskName = $task.attr("data-name");
+            let taskComplete = Number($task.attr("data-complete"));
+            let taskIncomplete = Number($task.attr("data-incomplete"));
+            let taskIgnored = Number($task.attr("data-ignored"));
+            let taskPending = Number($task.attr("data-pending"));
 
             // Create the data table.
             var data = new google.visualization.arrayToDataTable([
@@ -55,7 +62,7 @@ function drawChart() {
             var options = {
                 "title": taskName,
                 "titleTextStyle": {
-                    "color": "#403d39",
+                    "color": "#403D39",
                     "fontSize": 15
                 },
                 "width": width,
@@ -75,18 +82,17 @@ function drawChart() {
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.ColumnChart(document.getElementById(taskName));
             chart.draw(data, options);
-        }
-    }
+        });
+    });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    let raw = document.getElementById("raw-stats");
-    raw.remove();
-    let graphs = document.getElementById("graphs-stats");
-    graphs.hidden = false;
-    // Load the Visualization API and the corechart package.
-    google.charts.load('current', {'packages':['corechart']});
-
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
+$(function() {
+        // Remove the default list of stats
+        $("#raw-stats").remove();
+        // Show the stats to fill with the charts
+        $("#graphs-stats").removeAttr("hidden");
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
 });

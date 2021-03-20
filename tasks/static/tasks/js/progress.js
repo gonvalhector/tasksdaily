@@ -1,8 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let submit = document.getElementById("submit");
-    submit.disabled = true;
-    let querySelect = document.getElementById("query");
-    querySelect.addEventListener("change", () => {
-        submit.disabled = false;
+$(function() {
+    // Declare variables
+    let $submit = $("#submit");
+    // Disable submit button
+    $submit.prop("disabled", true);
+    $("#query").on("change", function() {
+        $submit.prop("disabled", false);
     });
 });

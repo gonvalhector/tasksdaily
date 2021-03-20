@@ -1,25 +1,34 @@
 function changeIcon() {
-/*
-Change the image button or icon for the
-collapsible element when clicked
-*/
-    let src = this.getAttribute("src");
-    if (src == "/static/tasks/images/icons/expand.svg") {
-        this.setAttribute("src", "/static/tasks/images/icons/contract.svg");
-        this.setAttribute("alt", "Contract");
-        this.setAttribute("title", "Contract");
+    /*
+    Change the image button or icon for the
+    collapsible element when clicked
+    */
+    // If the button represents an expanded element
+    if ($(this).attr("title") === "Expand") {
+        // Change to contracted
+        $(this).attr({
+            src: "/static/tasks/images/icons/contract.svg",
+            alt: "Contract",
+            title: "Contract"
+        });
     }
+    // If the button represents a contracted element
     else {
-        this.setAttribute("src", "/static/tasks/images/icons/expand.svg");
-        this.setAttribute("alt", "Expand");
-        this.setAttribute("title", "Expand");
+        // Change to expanded
+        $(this).attr({
+            src: "/static/tasks/images/icons/expand.svg",
+            alt: "Expand",
+            title: "Expand"
+        });
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    let expandIcons = document.getElementsByClassName("expandable");
-    for (let i = 0; i < expandIcons.length; i++) {
-        let expandIcon = expandIcons.item(i);
-        expandIcon.addEventListener("click", changeIcon, false);
-    }
+$(function() {
+    // Get all image buttons
+    let $expandIcons = $(".expandable");
+    // Iterate over each button
+    $expandIcons.each(function(index, element) {
+        // Call changeIcon when a button is clicked
+        $(this).on("click", changeIcon);
+    });
 });
